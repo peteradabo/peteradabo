@@ -1,0 +1,13 @@
+DELIMITER $$
+
+CREATE TRIGGER after_purchase_item_insert
+AFTER INSERT ON Purchase_items
+FOR EACH ROW
+BEGIN
+    UPDATE Products
+    SET stock = stock + NEW.quantity
+    WHERE id = NEW.productid;
+END$$
+
+DELIMITER ;
+
