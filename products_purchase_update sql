@@ -11,3 +11,16 @@ END$$
 
 DELIMITER ;
 
+
+DELIMITER $$
+
+CREATE TRIGGER after_purchase_item_delete
+AFTER DELETE ON Purchase_items
+FOR EACH ROW
+BEGIN
+    UPDATE Products
+    SET stock = stock - OLD.quantity
+    WHERE id = OLD.productid;
+END$$
+
+DELIMITER ;
